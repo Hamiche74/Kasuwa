@@ -1,4 +1,20 @@
--- Création de la table Utilisateurs
+<?php
+// Informations de connexion à la base de données MySQL
+$host = 'localhost'; // Adresse du serveur MySQL
+$user = 'votre_utilisateur'; // Nom d'utilisateur MySQL
+$pass = 'votre_mot_de_passe'; // Mot de passe MySQL
+$dbname = 'nom_de_votre_base_de_donnees'; // Nom de la base de données
+
+try {
+    // Connexion à la base de données MySQL
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+
+    // Afficher les erreurs de PDO en cas de problème
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Création des tables
+    $sql = "
+    -- Création de la table Utilisateurs
 CREATE TABLE Utilisateurs (
     ID_Utilisateur INT PRIMARY KEY,
     Nom VARCHAR(50) NOT NULL,
@@ -123,3 +139,14 @@ CREATE TABLE Gestion_Stocks (
     Quantite_En_Stock INT,
     Emplacement_Stockage VARCHAR(255)
 );
+";
+
+    // Exécution des requêtes SQL
+    $pdo->exec($sql);
+
+    echo "Base de données et tables créées avec succès.";
+
+} catch (PDOException $e) {
+    die("Erreur : " . $e->getMessage());
+}
+?>
